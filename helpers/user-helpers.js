@@ -52,7 +52,7 @@ module.exports={
                 let proExist=userCart.products.findIndex(product=> product.item==proId)
                 console.log(proExist)
                 if(proExist!=-1){
-                    db.get().collection(collection.CART_COLLECTION).updateOne({'products.item':objectId(proId)},{
+                    db.get().collection(collection.CART_COLLECTION).updateOne({user:objectId(userId),'products.item':objectId(proId)},{
                         $inc:{'products.$.quantity':1}
                     }).then(()=>{
                         resolve()
@@ -129,11 +129,32 @@ module.exports={
         })
     },
 
-    changeProductQuantity:({cartId,proId,count})=>{
-        return new Promise((resolve,reject)=>{
-            
-        })
-    }
+    changeProductQuantity:(details)=>{
+        details.count=parseInt(details.count)
+        details.quantity=parseInt(details.quantity)
 
-    
+        return new Promise((resolve,reject)=>{
+            if(details.count==-1 && details.quantity==1){
+                db.get().collection(collection.CART_COLLECTION).updateOne({_id:objectId(details.cart)},
+                {
+                    $pull:{products:{item:objectId(details.product)}}
+                }
+                ).then((response)=>{
+                    resolve({removeProduct:true})
+                })
+
+            }else{
+
+            db.get().collection(collection.CART_COLLECTION).updateOne({_id:objectId(details.cart),'products.item':objectId(details.product)},
+            {
+                $inc:{'products.$.quantity':details.count}
+            }
+            ).then((response)=>{
+                resolve(true)
+            })
+            
+        }
+    })
+
+} 
 }
