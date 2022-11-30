@@ -156,5 +156,24 @@ module.exports={
         }
     })
 
-} 
+},
+
+
+removeButton:(doc)=>{
+  
+    return new Promise((resolve,reject)=>{
+       
+            db.get().collection(collection.CART_COLLECTION).updateOne({_id:objectId(doc.cart)},
+            {
+                $pull:{products:{item:objectId(doc.product)}}
+            }
+            ).then((response)=>{
+                resolve({response:true})
+            })
+
+       
+})
+
+}
+   
 }
