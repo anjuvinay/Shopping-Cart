@@ -86,8 +86,14 @@ router.post('/change-product-quantity',(req,res,next)=>{
 
 router.post('/remove-item',(req,res)=>{
   userHelpers.removeButton(req.body).then((response)=>{
+    console.log("anju"+response)
     res.json(response)    
   })
+})
+
+router.get('/place-order',verifyLogin, async(req,res)=>{
+  let total=await userHelpers.getTotalAmount(req.session.user._id)
+  res.render('user/place-order',{total})
 })
 
 
