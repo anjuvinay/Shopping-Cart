@@ -43,17 +43,17 @@ router.get('/signup', function(req, res){
 router.post('/signup', function(req, res){
  userHelpers.doSignup(req.body).then((response)=>{
   console.log(response)
-  req.session.user.loggedIn=true
   req.session.user=response
+  req.session.user.loggedIn=true
   res.redirect('/')
  })
 })
 
 router.post('/login',(req, res)=>{
   userHelpers.doLogin(req.body).then((response)=>{
-    if(response.status){
-      req.session.user.loggedIn=true
+    if(response.status){ 
       req.session.user=response.user
+      req.session.user.loggedIn=true
       res.redirect('/')
     }else{
       req.session.userLoginErr="Invalid username or Password"

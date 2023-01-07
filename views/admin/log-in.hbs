@@ -1,13 +1,14 @@
 <div class="row">
     <div class="col-md-6 m-auto">
         <div class="container mt-5 pl-5">
-            <h2 class="text-center">Create new account</h2>
-            <form action="/admin/signup" method="post">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="Name" placeholder="Enter Name">
-                </div>
+            <h2 class="text-center">Admin-Login</h2>
+            <form action="/admin/log-in" method="post">
 
+            {{#if loginErr}}
+
+            <p class="error">{{loginErr}}</p>
+
+            {{/if}}
                 <div class="form-group">
                     <label>Email address</label>
                     <input type="email" class="form-control" name="Email" placeholder="Enter email">
@@ -18,8 +19,8 @@
                     <input type="password" class="form-control" name="Password" placeholder="Password">
                 </div>
 
-                <a href="/signup">Already have account ?</a>
-                <button type="submit" class="btn btn-primary float-right">Signup</button>
+                <a href="/admin/sign-up">Create new admin-account ?</a>
+                <button type="submit" class="btn btn-primary float-right">Login</button>
             </form>
         </div>
     </div>
