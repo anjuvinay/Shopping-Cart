@@ -6,7 +6,7 @@ const { getOrderProducts } = require('../helpers/user-helpers');
 const userHelpers=require('../helpers/user-helpers')
 
 const verifyLogin = (req, res, next)=>{
-  if(req.session.userLoggedIn){
+  if(req.session.user){
     next()
   }else{
     res.redirect('/login')

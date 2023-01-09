@@ -6,7 +6,7 @@ var productHelper=require('../helpers/product-helpers')
 const adminHelpers=require('../helpers/admin-helpers')
 
 const verifyLogin = (req, res, next)=>{
-  if(req.session.adminLoggedIn){
+  if(req.session.admin){
     next()
   }else{
     res.redirect('admin/log-in')
@@ -134,7 +134,7 @@ router.get('/all-orders',(req,res)=>{
   
   productHelpers.getAllOrders().then((orders) => {
     
-    res.render('admin/all-orders', {Admin:req.session.admin,admin,orders, admin:true})
+    res.render('admin/all-orders', {Admin:req.session.admin,admin,orders})
   })
 })
 
@@ -151,7 +151,7 @@ router.get('/view-products', function(req, res, next) {
   let admin=req.session.admin
   productHelpers.getAllProducts().then((products)=>{
     console.log(products)
-    res.render('admin/view-products',{admin:true, products})
+    res.render('admin/view-products',{Admin:req.session.admin,admin, products})
   })
  
 });
