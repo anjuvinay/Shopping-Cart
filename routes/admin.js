@@ -15,7 +15,7 @@ const verifyLogin = (req, res, next)=>{
 
 /* GET users listing. */
 router.get('/',verifyLogin, function(req, res, next) {
-  // let admin=req.session.admin
+  let admin=req.session.admin
   productHelpers.getAllProducts().then((products)=>{
     console.log(products)
     res.render('admin/view-products',{admin:true, products})
@@ -81,7 +81,7 @@ router.post('/edit-product/:id',(req,res)=>{
 })
 
 router.get('/log-in', function(req, res){
-  if(req.session.admin){
+  if(req.session.admin){   
   res.render('admin/log-in',{admin:true})
 }else{
   res.render('admin/log-in',{"loginErr":req.session.adminLoginErr,admin:true})
@@ -111,7 +111,6 @@ router.post('/sign-up', function(req, res){
     if(response.status){ 
       req.session.admin=response.admin
       req.session.admin.loggedIn=true
-      // let admin=req.session.admin
   productHelpers.getAllProducts().then((products)=>{
     console.log(products)
     res.render('admin/view-products',{admin:true, products})
@@ -129,6 +128,34 @@ router.get('/log-out',(req,res)=>{
   req.session.adminLoggedIn=false
   res.redirect('/admin/log-in')
 })
+
+router.get('/all-orders',(req,res)=>{
+  let  admin=req.session.admin;
+  
+  productHelpers.getAllOrders().then((orders) => {
+    
+    res.render('admin/all-orders', {Admin:req.session.admin,admin,orders, admin:true})
+  })
+})
+
+router.get('/all-users',(req,res)=>{
+  let  admin=req.session.admin;
+  
+  productHelpers.getAllUsers().then((users) => {
+    console.log(users);
+    res.render('admin/all-users', {Admin:req.session.admin,admin,users})
+  })
+})
+
+router.get('/view-products', function(req, res, next) {
+  let admin=req.session.admin
+  productHelpers.getAllProducts().then((products)=>{
+    console.log(products)
+    res.render('admin/view-products',{admin:true, products})
+  })
+ 
+});
+
 
 
 module.exports = router;

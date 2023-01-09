@@ -47,5 +47,18 @@ module.exports={
                 resolve()
             })
         })
-    }
+    },
+
+   getAllUsers:(users)=>{
+        return new Promise((resolve,reject)=>{
+          let users= db.get().collection(collection.USER_COLLECTION).find().toArray()
+          resolve(users)
+        })
+      },
+      getAllOrders:(orders)=>{
+        return new Promise((resolve,reject)=>{
+          let orders= db.get().collection(collection.ORDER_COLLECTION).find().toArray()
+          resolve(orders)
+        })
+      }
 }
