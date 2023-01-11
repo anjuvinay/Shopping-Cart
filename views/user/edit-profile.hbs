@@ -1,0 +1,56 @@
+<section>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-center">Edit Profile</h2>
+                <form action="/user/edit-profile/{{profile._id}}" method="post" enctype="multipart/form-data">
+
+                   
+                     <label for="">Profile Picture</label>
+                     <img src="/product-images/{{product._id}}.jpg" style="width:100px; height:auto" id="imgView" class="pt-3">
+                    <input type="file" class="form-control" name="Image" onchange="viewImage(event)">
+
+
+                    <label for="">Name</label>
+                    <input type="text" name="Name" class="form-control" value="{{profile.Name}}">
+                    <br>
+                     
+
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="inlineCheckbox1" value="{{profile.Gender}}" name="Gender">
+                    <label class="form-check-label" for="inlineCheckbox1">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="inlineCheckbox1" value="{{profile.Gender}}" name="Gender">
+                    <label class="form-check-label" for="inlineCheckbox2">Female</label>
+                    </div>
+                    <br><br>
+
+
+                    <label for="">Mobile</label>
+                    <input type="number" name="phone" class="form-control" value="{{profile.phone}}">
+
+                     <label for="">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{profile.email}}">
+
+                     <label for="">city</label>
+                    <input type="text" name="city" class="form-control" value="{{profile.city}}">
+
+                    <label for="">State</label>
+                    <input type="text" name="state" class="form-control" value="{{profile.state}}">
+
+                     
+
+                    <button type="submit" class="btn btn-success mt-4">Save</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function viewImage(event){
+        document.getElementById('imgView').src= URL.createObjectURL(event.target.files[0])
+    }
+</script>

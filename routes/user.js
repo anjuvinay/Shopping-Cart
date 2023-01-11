@@ -115,8 +115,7 @@ router.post('/place-order',async(req,res)=>{
       userHelpers.generateRazorpay(orderId,totalPrice).then((response)=>{
         res.json(response)
       })
-    }
-    
+    }    
 
   })
   console.log(req.body)
@@ -146,6 +145,62 @@ router.post('/verify-payment',(req,res)=>{
     res.json({status:false,errMsg:''})
   })
 })
+
+router.get('/set-profile', function(req, res) {
+  res.render('user/set-profile',{user:req.session.user})
+})
+
+router.post('/set-profile',(req,res)=>{
+  console.log(req.body)
+  console.log(req.files.Image)
+
+  userHelpers.addProfile(req.body,(insertedId)=>{
+    let image=req.files.Image
+       
+    image.mv('../SHOPPING CART/public/product-images/'+insertedId+'.jpg',(err,done)=>{
+      
+      if(!err){
+        userHelpers.getProfile().then((profile)=>{
+          res.render('user/profile',{user:req.session.user,profile})
+        })
+      }else{
+        console.log(err)
+      }
+    })
+    
+  })
+})
+
+router.get('/profile',verifyLogin, function(req, res, next) {
+  userHelpers.getProfile().then((profile)=>{
+    console.log(profile)
+    res.render('user/profile',{user:req.session.user,profile})
+  })
+ 
+});
+
+router.get('/edit-profile/:id', async(req,res)=>{
+  let profile= await userHelpers.getProfileDetails(req.params.id)
+  res.render('user/edit-profile',{user:req.session.user,profile})
+})
+
+router.post('/edit-profile/:id',(req,res)=>{
+  let insertedId=req.params.id
+  userHelpers.updateProfile(req.params.id, req.body).then(()=>{
+    // userHelpers.getProfile().then((profile)=>{
+    //   res.render('user/profile',{user:req.session.user,profile})
+    // })
+    res.redirect('/',{user:req.session.user})
+
+    if(req.files.Image){
+      let image=req.files.Image
+      image.mv('../SHOPPING CART/public/product-images/'+insertedId+'.jpg')
+    }
+  })
+  
+})
+
+
 
 
 module.exports = router;

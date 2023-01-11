@@ -347,6 +347,49 @@ changePaymentStatus:(orderId)=>{
         resolve()
     })
 })
+},
+
+addProfile:(profile,callback)=>{
+    console.log(profile)
+    
+    db.get().collection('profile').insertOne(profile).then((data)=>{
+        callback(data.insertedId)
+
+    })
+},
+
+getProfile:()=>{
+    return new Promise(async(resolve,reject)=>{
+        let profile=await db.get().collection(collection.PROFILE_COLLECTION).find().toArray()
+        resolve(profile)
+    })
+},
+
+getProfileDetails:(proId)=>{
+    return new Promise((resolve, reject)=>{
+        db.get().collection(collection.PROFILE_COLLECTION).findOne({_id:objectId(proId)}).then((profile)=>{
+            resolve(profile)
+        })
+    })
+},
+
+updateProfile:(proId, proDetails)=>{
+    return new Promise((resolve, reject)=>{
+        db.get().collection(collection.PROFILE_COLLECTION).
+        updateOne({_id:objectId(proId)},{
+            $set:{
+                Name:proDetails.Name,
+                Gender:proDetails.Gender,
+                Phone:proDetails.Phone,
+                email:proDetails.email,
+                city:proDetails.city,
+                state:proDetails.state
+            }
+        }).then((response)=>{
+            resolve()
+        })
+    })
 }
+
    
 }
