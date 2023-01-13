@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-md-6">
                 <h2 class="text-center">Edit Profile</h2>
-                <form action="/user/edit-profile/{{profile._id}}" method="post" enctype="multipart/form-data">
+                <form action="/edit-profile/{{profile._id}}" method="post" enctype="multipart/form-data">
 
                    
                      <label for="">Profile Picture</label>
-                     <img src="/product-images/{{product._id}}.jpg" style="width:100px; height:auto" id="imgView" class="pt-3">
+                     <img src="/product-images/{{profile._id}}.jpg" style="width:100px; height:auto" id="imgView" class="pt-3">
                     <input type="file" class="form-control" name="Image" onchange="viewImage(event)">
 
 
@@ -15,13 +15,12 @@
                     <input type="text" name="Name" class="form-control" value="{{profile.Name}}">
                     <br>
                      
-
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" id="inlineCheckbox1" value="{{profile.Gender}}" name="Gender">
+                    <input class="form-check-input" type="radio" id="inlineCheckbox1" value="{{profile.Gender}}" name="Gender" checked>
                     <label class="form-check-label" for="inlineCheckbox1">Male</label>
                     </div>
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" id="inlineCheckbox1" value="{{profile.Gender}}" name="Gender">
+                    <input class="form-check-input" type="radio" id="inlineCheckbox2" value="{{profile.Gender}}" name="Gender" checked>
                     <label class="form-check-label" for="inlineCheckbox2">Female</label>
                     </div>
                     <br><br>

@@ -187,10 +187,9 @@ router.get('/edit-profile/:id', async(req,res)=>{
 router.post('/edit-profile/:id',(req,res)=>{
   let insertedId=req.params.id
   userHelpers.updateProfile(req.params.id, req.body).then(()=>{
-    // userHelpers.getProfile().then((profile)=>{
-    //   res.render('user/profile',{user:req.session.user,profile})
-    // })
-    res.redirect('/',{user:req.session.user})
+    //  
+    res.redirect('/profile')
+   
 
     if(req.files.Image){
       let image=req.files.Image
