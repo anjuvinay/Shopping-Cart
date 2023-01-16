@@ -13,18 +13,10 @@
 
                     <label for="">Name</label>
                     <input type="text" name="Name" class="form-control" value="{{profile.Name}}">
-                    <br>
-                     
-                    <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" id="inlineCheckbox1" value="{{profile.Gender}}" name="Gender" checked>
-                    <label class="form-check-label" for="inlineCheckbox1">Male</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" id="inlineCheckbox2" value="{{profile.Gender}}" name="Gender" checked>
-                    <label class="form-check-label" for="inlineCheckbox2">Female</label>
-                    </div>
-                    <br><br>
-
+                    <br>          
+                    
+                    <label><input type="radio" name="Gender" value="Male" checked>Male</label><br>
+                    <label><input type="radio" name="Gender" value="Female" checked>Female</label><br>
 
                     <label for="">Mobile</label>
                     <input type="number" name="phone" class="form-control" value="{{profile.phone}}">
@@ -37,8 +29,6 @@
 
                     <label for="">State</label>
                     <input type="text" name="state" class="form-control" value="{{profile.state}}">
-
-                     
 
                     <button type="submit" class="btn btn-success mt-4">Save</button>
 
