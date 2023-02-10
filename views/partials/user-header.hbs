@@ -11,12 +11,15 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Products <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/cart">Cart <span class="badge badge-success" id="cart-count">{{cartCount}}</span></a>
                     </li>
                     {{#if user}}
-                   <li class="nav-item">
+                   <li class="nav-item active">
                         <a class="nav-link" href="/orders">Orders</a>
+                    </li> 
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/notifications">Notifications <span class="badge badge-success" id="msg-count">{{msgCount}}</span></a>
                     </li> 
                     {{/if}}
                     </ul>

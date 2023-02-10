@@ -136,6 +136,20 @@ module.exports={
         })
     },
 
+    getMsgCount:(userId)=>{
+         return new Promise(async(resolve, reject)=>{
+             let msg=0
+                let orders=await db.get().collection(collection.ORDER_COLLECTION)               
+                .find({$and: [{userId:objectId(userId)},{status:"Shipped"}]}).toArray()
+                console.log(orders)
+
+             msg=orders.length
+             console.log(msg)
+             resolve(msg)
+        })
+
+    },
+
     changeProductQuantity:(details)=>{
         details.count=parseInt(details.count)
         details.quantity=parseInt(details.quantity)

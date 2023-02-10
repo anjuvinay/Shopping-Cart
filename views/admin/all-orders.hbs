@@ -29,6 +29,15 @@
                     <td>
                         <a href="/view-order-products/{{this._id}}" class="btn btn-primary">View Products</a>
                     </td>
+                    {{!-- {{#if "{{this.status}}==='Shipped'"}} --}}
+                    <td>
+                        <a href="/admin/shipped-status/{{this._id}}" class="btn btn-info" >Shipped</a>
+                    </td>
+                    {{!-- {{else}} --}}
+                    <td>
+                        <a href="/admin/cancelled-status/{{this._id}}" class="btn btn-danger">Cancel</a>
+                    </td>
+                    {{!-- {{/if}} --}}
                 </tr>
                 {{/each}}
             </tbody>
@@ -40,3 +49,4 @@
 
 
 </section>
+

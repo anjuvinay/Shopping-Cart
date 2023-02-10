@@ -147,6 +147,19 @@ router.get('/view-products',verifyLogiin, function(req, res, next) {
  
 });
 
+router.get('/shipped-status/:id',verifyLogiin, (req,res)=>{
+  adminHelpers.changeShippingStatus(req.params.id).then(()=>{
+    console.log(req.params.id)
+    res.redirect('/admin/all-orders')
+  })
+})
+
+router.get('/cancelled-status/:id',verifyLogiin, (req,res)=>{
+  adminHelpers.changeCancelledStatus(req.params.id).then(()=>{
+    res.redirect('/admin/all-orders')
+  })
+})
+
 
 
 module.exports = router;

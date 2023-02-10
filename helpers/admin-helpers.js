@@ -42,7 +42,38 @@ module.exports={
                 resolve({status:false})
             }
         })
-    }
+    },
+    
+    changeShippingStatus:(orderId)=>{
+        return new Promise((resolve,reject)=>{
+    
+        db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
+        {
+            $set:{
+                status:'Shipped'
+            }
+    
+        }).then(()=>{
+            console.log(" Status changed")
+            resolve()
+        })
+    })
+    },
+
+    changeCancelledStatus:(orderId)=>{
+        return new Promise((resolve,reject)=>{
+    
+        db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
+        {
+            $set:{
+                status:'Cancelled'
+            }
+    
+        }).then(()=>{
+            resolve()
+        })
+    })
+    }   
 
 
 }

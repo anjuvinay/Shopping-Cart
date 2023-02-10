@@ -18,11 +18,13 @@ router.get('/', async function(req, res, next) {
   let user=req.session.user
   console.log(user)
   let cartCount=null
+  let msgCount=null
   if(req.session.user){
     cartCount=await userHelpers.getCartCount(req.session.user._id)
+    msgCount=await userHelpers.getMsgCount(req.session.user._id)
   }
   productHelpers.getAllProducts().then((products)=>{
-    res.render('user/view-products',{admin:false, products, user, cartCount})
+    res.render('user/view-products',{admin:false, products, user, cartCount, msgCount})
   })
  
 });
@@ -75,7 +77,7 @@ router.get('/cart',verifyLogin,async(req,res)=>{
     let totalValue=await userHelpers.getTotalAmount(req.session.user._id)
   }
  
- 
+
   res.render('user/cart',{products,user:req.session.user, totalValue})
 })
 
@@ -197,6 +199,10 @@ router.post('/edit-profile/:id',(req,res)=>{
     }
   })
   
+})
+
+router.get('/notifications',verifyLogin, function(req, res){
+  res.render('user/notification',{user:req.session.user})
 })
 
 
