@@ -12,7 +12,14 @@ var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 
 var app = express();
-app.engine('hbs',hbs.engine({extname:'hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layout/',partialsDir:__dirname+'/views/partials/'}))
+app.engine('hbs',hbs.engine({extname:'hbs',   helpers: {if_equal: function(a, b, opts) {
+  if (a == b) {
+      return opts.fn(this)
+  } else {
+      return opts.inverse(this)
+  }
+}}, 
+defaultLayout:'layout',layoutsDir:__dirname+'/views/layout/',partialsDir:__dirname+'/views/partials/'}))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -25,10 +32,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload())
 app.use(session({secret:"key", cookie:{maxAge:600000}}))
 
+
+
 db.connect((err)=>{
   if(err) console.log("Connection Error"+err)
   else console.log('Database connected to port 27017')
 })
+
+
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

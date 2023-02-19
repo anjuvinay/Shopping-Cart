@@ -54,7 +54,8 @@ module.exports={
         db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
         {
             $set:{
-                status:'Shipped'
+                status:'Shipped',
+                msg:"Your order has been shipped"
             }
     
         }).then(()=>{

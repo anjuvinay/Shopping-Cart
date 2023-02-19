@@ -99,6 +99,7 @@ module.exports={
 
           {
             $project:{
+               
                 item:'$products.item',
                 quantity:'$products.quantity'
             }
@@ -271,7 +272,6 @@ placeOrder:(order,products,total)=>{
         products:products,
         totalAmount:total,
         status:status,
-        msg:products+"your order has been shipped",
         date:new Date()
     }
 
@@ -308,7 +308,8 @@ getOrderProducts:(orderId)=>{
             },
             {
                 $project:{
-                    
+
+                    Name: '$products.Name',
                     item:'$products.item',
                     quantity:'$products.quantity'
                 }
@@ -316,6 +317,7 @@ getOrderProducts:(orderId)=>{
             {
                 $lookup:{
                     from:collection.PRODUCT_COLLECTION,
+                    localField:'Name',
                     localField:'item',
                     foreignField:'_id',
                     as:'product'
@@ -323,7 +325,7 @@ getOrderProducts:(orderId)=>{
             },
             {
                 $project:{
-                    item:1,quantity:1,product:{$arrayElemAt:['$product',0]}
+                    item:1,Name:1,quantity:1,product:{$arrayElemAt:['$product',0]}
                 }
             }
         ]).toArray()

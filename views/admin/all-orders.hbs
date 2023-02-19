@@ -29,15 +29,19 @@
                     <td>
                         <a href="/view-order-products/{{this._id}}" class="btn btn-primary">View Products</a>
                     </td>
-                    {{#if status:'Shipped'}}
+                 
                     <td>
+                        {{#if_equal this.status "Shipped"}}
                         <a href="/admin/shipped-status/{{this._id}}" class="btn btn-info" >Shipped</a>
+                        {{else}}
+                        <a href="/admin/shipped-status/{{this._id}}" class="btn btn-info" >Ship</a>
+                        {{/if_equal}}
                     </td>
-                    {{else}}
+                   
                     <td>
                         <a href="/admin/cancelled-status/{{this._id}}" class="btn btn-danger">Cancel</a>
                     </td>
-                    {{/if}}
+                   
                 </tr>
                 {{/each}}
             </tbody>
