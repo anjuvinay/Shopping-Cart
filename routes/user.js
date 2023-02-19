@@ -201,11 +201,13 @@ router.post('/edit-profile/:id',(req,res)=>{
   
 })
 
-router.get('/notifications',verifyLogin, function(req, res){
-  res.render('user/notification',{user:req.session.user})
-})
+ router.get('/notifications',verifyLogin, async(req, res)=>{
+   let user=req.session.user
+   let orders=await userHelpers.getShippedOrder(req.session.user._id)
+   res.render('user/notification',{user:req.session.user, orders})
+ })
 
-
+ 
 
 
 module.exports = router;

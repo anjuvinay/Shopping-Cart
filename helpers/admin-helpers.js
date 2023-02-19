@@ -45,7 +45,11 @@ module.exports={
     },
     
     changeShippingStatus:(orderId)=>{
-        return new Promise((resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
+            let item =await db.get().collection(collection.ORDER_COLLECTION).findOne({_id:objectId(orderId)})
+            console.log(item)
+         db.get().collection(collection.COUNT_COLLECTION).insertOne(item)
+        
     
         db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
         {

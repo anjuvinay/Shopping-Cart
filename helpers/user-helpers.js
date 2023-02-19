@@ -136,18 +136,31 @@ module.exports={
         })
     },
 
-    getMsgCount:(userId)=>{
-         return new Promise(async(resolve, reject)=>{
-             let msg=0
-                let orders=await db.get().collection(collection.ORDER_COLLECTION)               
-                .find({$and: [{userId:objectId(userId)},{status:"Shipped"}]}).toArray()
-                console.log(orders)
+     getMsgCount:(userId)=>{
+          return new Promise(async(resolve, reject)=>{
+              let msg=0
+                 let orders=await db.get().collection(collection.COUNT_COLLECTION)               
+                 .find({userId:objectId(userId)}).toArray()
+                 console.log(orders)
 
-             msg=orders.length
+              msg=orders.length
              console.log(msg)
-             resolve(msg)
-        })
+              resolve(msg)
+         })
 
+     },
+
+
+    getShippedOrder:(userId)=>{
+        return new Promise(async(resolve, reject)=>{
+            let ShippedOrders=await db.get().collection(collection.ORDER_COLLECTION)               
+                .find({$and: [{userId:objectId(userId)},{status:"Shipped"}]}).toArray()
+                console.log(ShippedOrders)
+
+                db.get().collection(collection.COUNT_COLLECTION).drop()
+
+                resolve(ShippedOrders)
+        })
     },
 
     changeProductQuantity:(details)=>{
@@ -258,6 +271,7 @@ placeOrder:(order,products,total)=>{
         products:products,
         totalAmount:total,
         status:status,
+        msg:products+"your order has been shipped",
         date:new Date()
     }
 
@@ -294,6 +308,7 @@ getOrderProducts:(orderId)=>{
             },
             {
                 $project:{
+                    
                     item:'$products.item',
                     quantity:'$products.quantity'
                 }
