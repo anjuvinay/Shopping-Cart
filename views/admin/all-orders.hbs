@@ -39,7 +39,11 @@
                     </td>
                    
                     <td>
+                        {{#if_equal this.status "Cancelled"}}
+                        <a href="/admin/cancelled-status/{{this._id}}" class="btn btn-danger">Cancelled</a>
+                        {{else}}
                         <a href="/admin/cancelled-status/{{this._id}}" class="btn btn-danger">Cancel</a>
+                         {{/if_equal}}
                     </td>
                    
                 </tr>

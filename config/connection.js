@@ -1,20 +1,28 @@
-const mongoClient = require('mongodb').MongoClient
+const { MongoClient } = require("mongodb");
+
 const state = {
-    db:null
-}
+  db: null,
+};
 
-module.exports.connect = function(done){
-    const url='mongodb://localhost:27017'
-    const dbname ='shopping'
+const url = "mongodb://127.0.0.1:27017";
+const dbName = "shopping";
 
-    mongoClient.connect(url,(err,data)=>{
-        if(err) return done(err)
-        state.db=data.db(dbname)
-        done()
-    })
+const client = new MongoClient(url);
 
-}
+const connect = async (cb) => {
+  try {
+    await client.connect();
+    const db = client.db(dbName);
+    state.db = db;
+    return cb();
+  } catch (err) {
+    return cb(err);
+  }
+};
 
-module.exports.get=function(){
-    return state.db
-}
+const get = () => state.db;
+
+module.exports = {
+  connect,
+  get,
+};
