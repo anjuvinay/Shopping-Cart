@@ -23,7 +23,7 @@
                     </li> 
                     {{/if}}
                     </ul>
-                    <div class="dropdown">
+                    <div class="dropdown pr-5">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     {{#if user}}
     {{user.Name}}
@@ -34,7 +34,7 @@
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     {{#if user}}
-     <a class="dropdown-item" href="/set-profile">Profile Settings</a>
+     <a class="dropdown-item" href="/set-profile">Create Profile</a>
      <a class="dropdown-item" href="/profile">My Profile</a>
      <a class="dropdown-item" href="/logout">Logout</a>
     {{else}}

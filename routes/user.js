@@ -6,6 +6,7 @@ const { getOrderProducts } = require('../helpers/user-helpers');
 const userHelpers=require('../helpers/user-helpers')
 
 const verifyLogin = (req, res, next)=>{
+  console.log(req.session.user)
   if(req.session.user){
     next()
   }else{
@@ -70,18 +71,16 @@ router.get('/logout',(req,res)=>{
   res.redirect('/')
 })
 
-router.get('/cart',verifyLogin,async(req,res)=>{
+router.get('/cart',verifyLogin, async(req,res)=>{
   let products=await userHelpers.getCartProducts(req.session.user._id)
   let totalValue=0
   if(products.length>0){
     totalValue=await userHelpers.getTotalAmount(req.session.user._id)
   }
- 
-
   res.render('user/cart',{products,user:req.session.user, totalValue})
 })
 
-router.get('/add-to-cart/:id/:',verifyLogin,(req,res)=>{  
+router.get('/add-to-cart/:id', verifyLogin, (req, res)=>{  
   userHelpers.addToCart(req.params.id, req.session.user._id).then(()=>{
    res.json({status:true})
   })
@@ -153,13 +152,11 @@ router.get('/set-profile', function(req, res) {
 })
 
 router.post('/set-profile',(req,res)=>{
-  console.log(req.body)
-  console.log(req.files.Image)
-
+  
   userHelpers.addProfile(req.body,(insertedId)=>{
     let image=req.files.Image
        
-    image.mv('../SHOPPING CART/public/product-images/'+insertedId+'.jpg',(err,done)=>{
+    image.mv('./public/product-images/'+insertedId+'.jpg',(err,done)=>{
       
       if(!err){
         userHelpers.getProfile().then((profile)=>{
@@ -175,7 +172,6 @@ router.post('/set-profile',(req,res)=>{
 
 router.get('/profile',verifyLogin, function(req, res, next) {
   userHelpers.getProfile().then((profile)=>{
-    console.log(profile)
     res.render('user/profile',{user:req.session.user,profile})
   })
  
@@ -189,13 +185,12 @@ router.get('/edit-profile/:id', async(req,res)=>{
 router.post('/edit-profile/:id',(req,res)=>{
   let insertedId=req.params.id
   userHelpers.updateProfile(req.params.id, req.body).then(()=>{
-    //  
     res.redirect('/profile')
    
 
     if(req.files.Image){
       let image=req.files.Image
-      image.mv('../SHOPPING CART/public/product-images/'+insertedId+'.jpg')
+      image.mv('./public/product-images/'+insertedId+'.jpg')
     }
   })
   

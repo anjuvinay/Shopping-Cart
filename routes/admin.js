@@ -20,7 +20,8 @@ router.get('/', function(req, res){
   if(req.session.admin){   
   res.redirect('admin/view-products',{Admin:req.session.admin,admin,products})
 }else{
-  res.render('admin/log-in',{Admin:req.session.admin,admin:true})
+  res.render('admin/log-in',{Admin:req.session.admin,admin:true,"loginErr":req.session.adminLoginErr})
+  req.session.adminLoginErr=false
   
 }
 
@@ -32,13 +33,11 @@ router.get('/add-product', function(req, res) {
 })
 
 router.post('/add-product',(req,res)=>{
-  console.log(req.body)
-  console.log(req.files.Image)
 
   productHelpers.addProduct(req.body,(insertedId)=>{
     let image=req.files.Image
        
-    image.mv('../SHOPPING CART/public/product-images/'+insertedId+'.jpg',(err,done)=>{
+    image.mv('./public/product-images/'+insertedId+'.jpg',(err,done)=>{
       
       if(!err){
         res.redirect('/admin/view-products')
@@ -74,7 +73,7 @@ router.post('/edit-product/:id',(req,res)=>{
 
     if(req.files.Image){
       let image=req.files.Image
-      image.mv('../SHOPPING CART/public/product-images/'+insertedId+'.jpg')
+      image.mv('./public/product-images/'+insertedId+'.jpg')
     }
   })
   
@@ -98,8 +97,7 @@ router.post('/sign-up', function(req, res){
   })
  })
 
- router.post('/log-in',(req, res)=>{
-  
+ router.post('/log-in',(req, res)=>{  
   adminHelpers.doLog_in(req.body).then((response)=>{  
     if(response.status){ 
       req.session.admin=response.admin

@@ -3,7 +3,7 @@ var collection=require('../config/collections')
 const bcrypt=require('bcrypt')
 const { ADMIN_COLLECTION } = require('../config/collections')
 const { response } = require('../app')
-var objectId = require('mongodb').ObjectID
+var ObjectId = require('mongodb').ObjectId
 const { resolve } = require('path')
 
 
@@ -46,12 +46,12 @@ module.exports={
     
     changeShippingStatus:(orderId)=>{
         return new Promise(async(resolve,reject)=>{
-            let item =await db.get().collection(collection.ORDER_COLLECTION).findOne({_id:objectId(orderId)})
+            let item =await db.get().collection(collection.ORDER_COLLECTION).findOne({_id:new ObjectId(orderId)})
             console.log(item)
          db.get().collection(collection.COUNT_COLLECTION).insertOne(item)
         
     
-        db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
+        db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:new ObjectId(orderId)},
         {
             $set:{
                 status:'Shipped',
@@ -68,7 +68,7 @@ module.exports={
     changeCancelledStatus:(orderId)=>{
         return new Promise((resolve,reject)=>{
     
-        db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},
+        db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:new ObjectId(orderId)},
         {
             $set:{
                 status:'Cancelled'
