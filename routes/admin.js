@@ -18,7 +18,7 @@ const verifyLogiin = (req, res, next)=>{
 router.get('/', function(req, res){
   let admin=req.session.admin
   if(req.session.admin){   
-  res.redirect('admin/view-products',{Admin:req.session.admin,admin,products})
+  res.redirect('admin/view-products')
 }else{
   res.render('admin/log-in',{Admin:req.session.admin,admin:true,"loginErr":req.session.adminLoginErr})
   req.session.adminLoginErr=false
